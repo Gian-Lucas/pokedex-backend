@@ -1,14 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-
+const pokemon = require("./controllers/pokemon");
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/pokemon", async (req, res) => {
-  return res.send('pokemon');
-});
+app.use(pokemon);
 
-// app.listen(process.env.PORT || 3000);
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
