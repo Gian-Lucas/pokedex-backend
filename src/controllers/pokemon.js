@@ -2,6 +2,16 @@ const express = require("express");
 const Pokemon = require("../models/pokemon");
 const route = express.Router();
 
+route.get("/pokemon/all", async (req, res) => {
+  try {
+    const result = await Pokemon.find();
+    return res.json(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({ error: "loading pokemon failed" });
+  }
+});
+
 route.get("/pokemon/:param", async (req, res) => {
   try {
     const param = req.params.param;
@@ -13,7 +23,8 @@ route.get("/pokemon/:param", async (req, res) => {
       return res.json(pokemon);
     }
   } catch (error) {
-    return res.status(400).send({ error: "loading repertories failed" });
+    console.log(error);
+    return res.status(400).send({ error: "loading pokemon failed" });
   }
 });
 
