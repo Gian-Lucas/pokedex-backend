@@ -1,4 +1,5 @@
 const express = require("express");
+const axios = require("axios");
 const Pokemon = require("../models/pokemon");
 const route = express.Router();
 
@@ -8,7 +9,7 @@ route.get("/pokemon/all", async (req, res) => {
     return res.json(result);
   } catch (error) {
     console.log(error);
-    return res.status(400).send({ error: "loading pokemon failed" });
+    return res.send({ error: "loading pokemon failed" });
   }
 });
 
@@ -24,7 +25,7 @@ route.get("/pokemon/:param", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).send({ error: "loading pokemon failed" });
+    return res.send({ error: "loading pokemon failed" });
   }
 });
 

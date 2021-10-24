@@ -6,39 +6,31 @@ const PokeSchema = new mongoose.Schema({
     require: true,
   },
   name: {
-      type: String,
-      require: true,
+    type: String,
+    require: true,
   },
-  spriteOfficialArtwork: {
-      type: String,
-      require: true,
+  firstType: {
+    type: String,
+    require: true,
   },
-  spriteDreamWorld: {
-      type: String,
-      require: true,
+  secondType: {
+    type: String,
   },
-  pokemonGif: {
-      type: String,
-      require: true,
+  sprite: {
+    type: String,
+    require: true,
   },
-  hp: {
-      type: Number,
-      require: true,
+  gameSprite: {
+    type: String,
+    require: true,
   },
-  weight: {
-      type: Number,
-      require: true,
+  gameSpriteShiny: {
+    type: String,
+    require: true,
   },
-  height: {
-      type: Number,
-      require: true,
-  },
-  type01: {
-      type: String,
-      require: true,
-  },
-  type02: {
-      type: String,
+  evolutionChain: {
+    type: Array,
+    require: true,
   },
 });
 
