@@ -27,8 +27,14 @@ route.get("/pokemon/:param", async (req, res) => {
 
     const typesResult = await Type.findOne({ name: pokemon.firstType });
 
-    const types = typesResult.map((type) => type.name);
-
+    const types = {
+      double_damage_to: typesResult.double_damage_to.map((type) => type.name),
+      half_damage_to: typesResult.half_damage_to.map((type) => type.name),
+      double_damage_from: typesResult.double_damage_from.map(
+        (type) => type.name
+      ),
+      half_damage_from: typesResult.half_damage_from.map((type) => type.name),
+    };
     pokemon.evolutionChain = evolutionChain;
     return res.json({ pokemon, damageRelations: types });
   } catch (error) {
