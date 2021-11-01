@@ -25,53 +25,10 @@ route.get("/pokemon/:param", async (req, res) => {
       evolutionChain: pokemon.evolutionChain,
     });
 
-    const typesFirst = await Type.findOne({ name: pokemon.firstType });
-
-    if (pokemon.secondType) {
-      const typesSecond = await Type.findOne({ name: pokemon.secondType });
-
-      const typesAll = {
-        double_damage_from: typesFirst.double_damage_from.concat(
-          typesSecond.double_damage_from
-        ),
-        double_damage_to: typesFirst.double_damage_to.concat(
-          typesSecond.double_damage_to
-        ),
-        half_damage_from: typesFirst.half_damage_from.concat(
-          typesSecond.half_damage_from
-        ),
-        half_damage_to: typesFirst.half_damage_to.concat(
-          typesSecond.half_damage_to
-        ),
-      };
-
-      // função para remover types repetidos
-      function removeTypesRepeated(typesArray) {
-        const newTypesArray = (typesArray = typesArray.map(
-          (type) => type.name
-        ));
-
-        return [...new Set(newTypesArray)];
-      }
-
-      // Removendo types repetidos
-      typesAll.half_damage_to = removeTypesRepeated(typesAll.half_damage_to);
-      typesAll.half_damage_from = removeTypesRepeated(
-        typesAll.half_damage_from
-      );
-      typesAll.double_damage_from = removeTypesRepeated(
-        typesAll.double_damage_from
-      );
-      typesAll.double_damage_to = removeTypesRepeated(
-        typesAll.double_damage_to
-      );
-
-      pokemon.evolutionChain = evolutionChain;
-      return res.json({ pokemon, damageRelations: typesAll });
-    }
+    const types = await Type.findOne({ name: pokemon.firstType });
 
     pokemon.evolutionChain = evolutionChain;
-    return res.json({ pokemon, damageRelations: typesFirst });
+    return res.json({ pokemon, damageRelations: types });
   } catch (error) {
     console.log(error);
     return res.json({ error: "loading pokemon failed" });
