@@ -25,7 +25,9 @@ route.get("/pokemon/:param", async (req, res) => {
       evolutionChain: pokemon.evolutionChain,
     });
 
-    const types = await Type.findOne({ name: pokemon.firstType });
+    const typesResult = await Type.findOne({ name: pokemon.firstType });
+
+    const types = typesResult.map((type) => type.name);
 
     pokemon.evolutionChain = evolutionChain;
     return res.json({ pokemon, damageRelations: types });
