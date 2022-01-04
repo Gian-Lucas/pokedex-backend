@@ -3,6 +3,53 @@ const Pokemon = require("../models/pokemon");
 const Type = require("../models/type");
 const route = express.Router();
 
+route.get("/pokemon/all/:generation", async (req, res) => {
+  try {
+    const generation = Number(req.params.generation);
+
+    switch (generation) {
+      case 1:
+        getByGeneration(1, 151);
+        break;
+      case 2:
+        getByGeneration(152, 251);
+        break;
+      case 3:
+        getByGeneration(252, 386);
+        break;
+      case 4:
+        getByGeneration(387, 493);
+        break;
+      case 5:
+        getByGeneration(494, 649);
+        break;
+      case 6:
+        getByGeneration(650, 721);
+        break;
+      case 7:
+        getByGeneration(722, 809);
+        break;
+      case 8:
+        getByGeneration(810, 898);
+        break;
+
+      default:
+        return res.json({ error: "generation invalid" });
+    }
+
+    async function getByGeneration(first, last) {
+      const result = await Pokemon.find();
+      const pokemons = result.filter(
+        (poke) => poke.id >= first && poke.id <= last
+      );
+      return res.json(pokemons);
+    }
+  } catch (error) {
+    console.log(error);
+    return res.json({ error: "loading pokemon failed" });
+  }
+});
+
 route.get("/pokemon/all", async (req, res) => {
   try {
     const result = await Pokemon.find();
